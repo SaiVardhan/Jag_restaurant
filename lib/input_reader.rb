@@ -1,23 +1,11 @@
-require 'csv'
 class InputReader
+  attr_reader :file_path
 
-  def initialize(args)
-  	@file = check_file_extn?(args[0]) ? args[0] : (raise "Input file not specified")
-    read_csv_data(@file)
+  def initialize(file_path)
+    @file_path = file_path
   end
 
-  def check_file_extn?(file)
-  File.exist?(file) && file.include?('.csv') 
-  end	
-
-  def read_csv_data(file)
-  	csv_text = File.read(file)
-    csv = CSV.parse(csv_text, :headers => true)
-    
-    csv.each do |row|
-      puts row.inspect
-    end
+  def valid?
+    file_path.split('.').last == 'csv'
   end
-
 end
-
